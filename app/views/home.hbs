@@ -1,0 +1,22 @@
+<style>
+      #map {
+        height: 96%;
+      }
+	  #header {
+        height: 4%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script src="/js/functions.js"></script>
+<br />
+<div id="header">
+	<input type="button" value="Show / hide countries" onclick="showHideCountries()"></input>
+</div>
+<br />
+<div id="map"></div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNeox5F9cGcEFiyJwl4w91T5f7upDcEZw&callback=initMap"></script>

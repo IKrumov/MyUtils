@@ -1,0 +1,86 @@
+<style>
+    #pomodoro {
+      font-size: 76px;
+    }
+    #title {
+      font-size: 76px;
+    }
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<h1 id="title"></h1>
+<input id="startButton" type="button" value="Start" onclick="setPomodoroTimer(); this.style.display = 'none'; document.getElementById('pauseButton').style.display = 'block'" />
+<div id="pomodoro"></div>
+<input id="pauseButton" type="button" value="Pause" onclick="pausePomodoroTimer();" style="display: none;" />
+<audio id="audio" src="data/alarm.wav" autostart="false" ></audio>
+<script>
+  var counter = 1;
+  
+  var pomodoroMinutes = 25;
+  var breakMinutes = 5;
+  var longBreakMinutes = 15;
+  var isPaused = false;
+
+  //var pomodoroMinutes = 0.05;
+  //var breakMinutes = 0.05;
+  //var longBreakMinutes = 0.05;
+
+  $(function(){ document.title = "Pomodoro";});
+  
+  function pausePomodoroTimer()
+  {
+    if(isPaused) {
+      document.getElementById("pauseButton").value = "Pause";
+    }
+    else{
+      document.getElementById("pauseButton").value = "Resume";
+    }
+    isPaused = !isPaused;
+  }
+
+  function setPomodoroTimer()
+  {
+    if(counter++ == 4)
+    {
+      counter = 1;
+      start(pomodoroMinutes, setLongBreakTimer, "P" + (counter - 1));
+    }
+    else
+    {
+      start(pomodoroMinutes, setBreakTimer, "P" + (counter - 1));
+    }
+  }
+  function setBreakTimer()
+  {
+    start(breakMinutes, setPomodoroTimer, "break");
+  }
+
+  function setLongBreakTimer()
+  {
+    start(longBreakMinutes, setPomodoroTimer, "BREAK");
+  }
+
+  function start(minutes, callback, title)
+  {
+    var seconds = minutes * 60;
+    setLabel(seconds--, title);
+    var x = setInterval(function() {
+        if(!isPaused) {
+          setLabel(seconds--, title);
+          if (seconds < 0) {
+              var sound = document.getElementById("audio");
+              sound.play();
+              clearInterval(x);
+              callback();
+          }
+        }
+    }, 1000);
+  }
+
+  function setLabel(seconds, title)
+  {
+    $("#title").html(title);
+    var label = Math.floor(seconds / 60) + "m " + Math.floor(seconds % 60) + "s ";
+    document.getElementById("pomodoro").innerHTML = label;
+    document.title = title + ": " + label;
+  }
+</script>
