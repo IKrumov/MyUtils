@@ -1,13 +1,12 @@
 <style>
     #pomodoro {
-      font-size: 76px;
+      font-size: 70px;
     }
     #title {
-      font-size: 76px;
+      font-size: 70px;
     }
 </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<h1 id="title"></h1>
 <input id="startButton" type="button" value="Start" onclick="setPomodoroTimer(); this.style.display = 'none'; document.getElementById('pauseButton').style.display = 'block'" />
 <div id="pomodoro"></div>
 <input id="pauseButton" type="button" value="Pause" onclick="pausePomodoroTimer();" style="display: none;" />

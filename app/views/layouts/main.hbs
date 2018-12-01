@@ -1,21 +1,39 @@
 <html>
   <head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
       html, body {
         margin: 0;
         padding: 10px 10px 0 10px;
       }
+	  .navi {
+		margin:10px 0 10px 0;
+	  }
+	  .navi a{
+		font-size:20px;
+	  }
+	  .current {
+		font-weight: bold;
+	  }
 	</style>
 	<link rel="icon" href="/favicon.ico" />
-    <title>Locations</title>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/b-1.5.4/sl-1.2.6/datatables.min.css"/>
+    
   </head>
   <body>
-    <ul>
-      <li><a href="/">Map</a></li>
-      <li><a href="/pomodoro">Pomodoro</a></li>
-      <li><a href="/copytools">Copy tools</a></li>
-	  <li><a href="http://www.nationsonline.org/oneworld/country_code_list.htm">Country codes</a></li>
-    </ul>
+    <nav class="navi">
+	  <a href="/">Map</a>&nbsp;|&nbsp;<a href="/pomodoro">Pomodoro</a>&nbsp;|&nbsp;<a href="/fitness">Fitness</a>&nbsp;|&nbsp;<a href="/food">Food</a>
+	  <script>
+		var url = window.location.href
+		var navLinks = document.getElementsByTagName("nav")[0].getElementsByTagName("a");
+		var i = 0;
+		for(i; i < navLinks.length; i ++){
+		  if(navLinks[i].href == url) {
+		    navLinks[i].className = "current";
+		  }
+		}
+	  </script>
+	</nav>
     {{{body}}}
   </body>
 </html>
