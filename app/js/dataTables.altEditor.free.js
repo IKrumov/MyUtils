@@ -383,6 +383,10 @@
                     $('#altEditor-modal').find('.modal-body').html(data);
                     $('#altEditor-modal').find('.modal-footer').html(btns);
                 });
+				
+				$("#altEditor-modal").contextmenu(function(event) {
+					event.preventDefault();
+				});
 
                 $('#altEditor-modal').modal('show');
                 $('#altEditor-modal input[0]').focus();

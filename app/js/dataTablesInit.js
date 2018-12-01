@@ -66,13 +66,11 @@ $(document).bind("mousedown", function (e) {
 
 // If the menu element is clicked
 $(".custom-menu li").click(function(){
-	
 	// This is the triggered action name
 	switch($(this).attr("data-action")) {
 		// A case for each action. Your actions here
 		case "edit": myTable.button('edit:name')[0].node.click(); break;
 	}
-  
 	// Hide it AFTER the action was triggered
 	$(".custom-menu").hide(100);
   });
