@@ -10,6 +10,7 @@ $.fn.dataTable.ext.search.push(
 $('#daySelector').on('change', function() { myTable.draw(); });
 
 $(document).ready(function() {
+	console.log("day is: " + new Date().getDay());
 	$("#daySelector").val(new Date().getDay());
 	
 	myTable = $('#example').DataTable({
