@@ -1,8 +1,8 @@
 var myTable;
 
 $.fn.dataTable.ext.search.push(
-	function( settings, data, dataIndex ) {
-		var day = parseFloat( data[1] ) || 0;
+	function(settings, data, dataIndex ) {
+		var day = parseFloat(data[1]) || 0;
 		return day == $("#daySelector").val();
 	}
 );
@@ -10,8 +10,15 @@ $.fn.dataTable.ext.search.push(
 $('#daySelector').on('change', function() { myTable.draw(); });
 
 $(document).ready(function() {
-	console.log("day is: " + new Date().getDay());
-	$("#daySelector").val(new Date().getDay());
+	var date = new Date();
+	var today = date.getDay();
+	var hour = date.getHours();
+	var min = date.getMinutes();
+	
+	var startHour = 6;
+	var startMin = 30;
+	
+	$("#daySelector").val(today);
 	
 	myTable = $('#example').DataTable({
 		"columns": [{ title: "Id", visible: false, type: "hidden" }, { title: "Day", visible: false, type: "hidden" }, { title: "Sort", type: "hidden" }, { title: "Food", type: "textarea" }],
@@ -26,6 +33,22 @@ $(document).ready(function() {
 		"ordering": false,
 		"paging": false,
 		"buttons": [{extend: 'selected',text: 'Edit',name: 'edit'}],
+		"initComplete": function(settings, json) {
+			var counter = 0;
+			var currentRow;
+
+			myTable.rows({filter: 'applied'}).every(function (index) {
+				var row = this.data();
+				var rowHour = 3 * counter + startHour;
+				counter++;
+				
+				if(!currentRow && (rowHour > hour || (rowHour == hour && startMin >= min)))
+				{
+					myTable.rows(this).select();
+					currentRow = this.data();
+				}
+			});
+		},
 		onEditRow: function(datatable, rowdata, success, error) {
 			$.ajax({
 				url: "/updateFoodItem",
@@ -36,6 +59,7 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
 	myTable.on('dblclick','tr',function(e){
 		myTable.rows(this).select();
 		myTable.button('edit:name')[0].node.click();
