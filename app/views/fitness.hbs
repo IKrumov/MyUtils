@@ -50,8 +50,6 @@
 		var search = function(settings, data, dataIndex ) {
 			var day = parseFloat(data[2]) || 0;
 			var variant = parseFloat(data[1]) || 0;
-			console.log(day);
-			console.log(variant);
 			return day == $("#daySelector").val() && variant ==  $("#optionSelector").val();			
 		};
 		
