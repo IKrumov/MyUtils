@@ -37,3 +37,24 @@
 </table>
 
 <script src="/app/js/dataTablesInit.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var columns = [
+			{ title: "Id", visible: false, type: "hidden" }, 
+			{ title: "Variant", visible: false, type: "hidden" },
+			{ title: "Day", visible: false, type: "hidden" },
+			{ title: "Weight" },
+			{ title: "Excercise", type: "textarea" }
+		];
+		
+		var search = function(settings, data, dataIndex ) {
+			var day = parseFloat(data[2]) || 0;
+			var variant = parseFloat(data[1]) || 0;
+			console.log(day);
+			console.log(variant);
+			return day == $("#daySelector").val() && variant ==  $("#optionSelector").val();			
+		};
+		
+		Initialize('/app/data/fitness.json', "/updateFitnessItem", columns, null, search);
+	});
+</script>

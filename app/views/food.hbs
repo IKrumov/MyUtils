@@ -27,3 +27,39 @@
     </tbody>
 </table>
 <script src="/app/js/dataTablesInit.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var date = new Date();
+		var today = date.getDay();
+		var hour = date.getHours();
+		var min = date.getMinutes();
+		var startHour = 6;
+		var startMin = 30;
+		
+		var initComplete = function(settings, json) {
+			var counter = 0;
+			var currentRow;
+
+			myTable.rows({filter: 'applied'}).every(function (index) {
+				var row = this.data();
+				var rowHour = 3 * counter + startHour;
+				counter++;
+				
+				if(!currentRow && (rowHour > hour || (rowHour == hour && startMin >= min)))
+				{
+					myTable.rows(this).select();
+					currentRow = this.data();
+				}
+			});
+		};
+		
+		var search = function(settings, data, dataIndex ) {
+			var day = parseFloat(data[1]) || 0;
+			return day == $("#daySelector").val();
+		};
+		
+		var columns = [{ title: "Id", visible: false, type: "hidden" }, { title: "Day", visible: false, type: "hidden" }, { title: "Sort", type: "hidden" }, { title: "Food", type: "textarea" }];
+	
+		Initialize('/app/data/food.json', "/updateFoodItem", columns, initComplete, search);
+	});
+</script>
