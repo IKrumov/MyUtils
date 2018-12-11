@@ -9,6 +9,7 @@ const fs = require('fs');
 const datasourcePath = __dirname + '/app/data/location_history.json';
 const fitnessDatasourcePath = __dirname + '/app/data/fitness.json';
 const foodDatasourcePath = __dirname + '/app/data/food.json';
+const http = require("http");
 
 function prettyStringify(json) {
 	var result = JSON.stringify(json,function(k,v){
@@ -26,6 +27,7 @@ app.engine('.hbs', exphbs({
   extname: '.hbs',
   layoutsDir: path.join(__dirname, 'app/views/layouts')
 }))
+
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'app/views'))
 app.get('/', (request, response) => { response.render('home') })
@@ -117,6 +119,10 @@ app.post('/updateFitnessItem', function (req, res) {
 
 	res.sendStatus(200);
 })
+
+setInterval(function() {
+    http.get("http://aubah.herokuapp.com");
+}, 300000); // every 5 minutes (300000)
 
 var port = process.env.PORT || 1337;
 app.listen(port);
