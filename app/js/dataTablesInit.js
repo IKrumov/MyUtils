@@ -1,6 +1,10 @@
 var myTable;
 
 $('#daySelector').on('change', function() { myTable.draw(); });
+if($('#optionSelector'))
+{
+	$('#optionSelector').on('change', function() { myTable.draw(); });
+}
 
 function Initialize(url, updateUrl, columns, initComplete, search)
 {
