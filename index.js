@@ -34,6 +34,7 @@ app.get('/', (request, response) => { response.render('home') })
 app.get('/pomodoro', (request, response) => { response.render('pomodoro') })
 app.get('/fitness', (request, response) => { response.render('fitness') })
 app.get('/food', (request, response) => { response.render('food') })
+app.get('/labels', (request, response) => { response.render('labels') })
 
 app.use("/app", express.static(__dirname + '/app'));
 app.use("/app/js", express.static(__dirname + '/app/js'));
@@ -119,6 +120,62 @@ app.post('/updateFitnessItem', function (req, res) {
 
 	res.sendStatus(200);
 })
+
+app.post('/createLabels', function (req, res) {
+	var ret = "";
+	var keys = getJsonFields(req.body.data);
+	keys.forEach(function(key)
+	{
+		var parents = key.parents.join('.');
+		var parents2 = key.parents.join('');
+		ret += `${parents}.${key.key} = res.${parents2}${key.key};`;
+		ret +="\n";
+	});
+	
+	var template = '[ResourceEntry("{key}", Value = "{value}", Description = "{key}", LastModified = "2018/06/06")] \r\n public string {key} => this["{key}"];';
+
+	keys.forEach(function(key)
+	{
+		ret += template.replace(new RegExp("{key}", 'g'), key.parents.join('') + key.key).replace(new RegExp("{value}", 'g'), key.value);
+		ret += "\n";
+		ret += "\n";
+	});
+
+	res.status(200).send(ret);
+})
+
+function getJsonFields(data, parents) {
+	if(!parents)
+		parents = [];
+	
+	var ret = [];
+	
+	if(!data)
+		return ret;
+	
+	if(data.constructor !== {}.constructor)
+		data = JSON.parse(data);
+			
+	Object.keys(data).forEach(function(key) {
+		var isObject = typeof(data[key]) == "object";
+		if(isObject)
+		{
+			var innerParents = parents.slice();
+			innerParents.push(key.charAt(0).toUpperCase() + key.slice(1));
+			
+			var inner = getJsonFields(data[key], innerParents);
+			if(inner)
+			{
+				inner.forEach(function(innerKey) { ret.push(innerKey);});
+			}
+		}
+		else
+		{
+			ret.push({"key": key, "parents": parents, "value": data[key] });
+		}
+	});
+	return ret;
+}
 
 setInterval(function() {
     http.get("http://aubah.herokuapp.com");
