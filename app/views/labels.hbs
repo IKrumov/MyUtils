@@ -1,0 +1,17 @@
+<button id="btnGenerateLables">Generate</button>
+<br />
+<textarea rows="20" style="width:650px" id="txtLabelsJson"></textarea>
+<textarea rows="20" style="width:650px" id="txtResult"></textarea>
+
+<script src="/app/js/jquery.js" type="text/javascript"></script>
+<script>
+	$('#btnGenerateLables').on('click', function() {
+		$.ajax({
+			url: "/createLabels",
+			type: 'POST',
+			data: { data: $("#txtLabelsJson").val() },
+			success: function(e){ $("#txtResult").val(e); },
+			error: function(e){ alert(e); }
+		});
+	});
+</script>
