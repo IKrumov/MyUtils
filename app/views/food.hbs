@@ -38,8 +38,6 @@
 		
 		$('#mealSelector > option').each(function() {
 			var rowHour = 3 * counter + startHour;
-			console.log(rowHour);
-			
 			counter++;
 			
 			if(!currentItemSet && (rowHour > hour || (rowHour == hour && startMin >= min)))
