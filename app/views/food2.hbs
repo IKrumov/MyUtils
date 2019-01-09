@@ -11,14 +11,16 @@
 <table border="0" cellspacing="5" cellpadding="5">
 	<tbody>
 		<tr>
-            <td>Meal:</td>
+            <td>Day of week:</td>
             <td>
 				<select id="daySelector">
-					<option value="1">Meal 1</option>
-					<option value="2">Meal 2</option>
-					<option value="3">Before Training</option>
-					<option value="4">After Training</option>
-					<option value="5">Meal 5</option>
+					<option value="1">Monday</option>
+					<option value="2">Tuesday</option>
+					<option value="3">Wednesday</option>
+					<option value="4">Thursday</option>
+					<option value="5">Friday</option>
+					<option value="6">Saturday</option>
+					<option value="0">Sunday</option>
 				</select>
 			</td>
         </tr>
@@ -36,16 +38,17 @@
 		
 		var initComplete = function(settings, json) {
 			var counter = 0;
-			var currentItemSet = false;
+			var currentRow;
 
 			myTable.rows({filter: 'applied'}).every(function (index) {
+				var row = this.data();
 				var rowHour = 3 * counter + startHour;
 				counter++;
 				
-				if(!currentItemSet && (rowHour > hour || (rowHour == hour && startMin >= min)))
+				if(!currentRow && (rowHour > hour || (rowHour == hour && startMin >= min)))
 				{
-					$("#daySelector").val(counter);
-					currentItemSet = true;
+					myTable.rows(this).select();
+					currentRow = this.data();
 				}
 			});
 		};
@@ -55,7 +58,7 @@
 			return day == $("#daySelector").val();
 		};
 		
-		var columns = [{ title: "Id", visible: false, type: "hidden" }, { title: "Meal", visible: false, type: "hidden" }, { title: "Food", type: "textarea" }];
+		var columns = [{ title: "Id", visible: false, type: "hidden" }, { title: "Day", visible: false, type: "hidden" }, { title: "Sort", type: "hidden" }, { title: "Food", type: "textarea" }];
 	
 		Initialize('/app/data/food.json', "/updateFoodItem", columns, initComplete, search);
 	});
