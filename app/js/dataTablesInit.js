@@ -1,6 +1,10 @@
 var myTable;
 
-$('#daySelector').on('change', function() { myTable.draw(); });
+if($('.updateTable'))
+{
+	$('.updateTable').on('change', function() { myTable.draw(); });
+}
+
 if($('#optionSelector'))
 {
 	$('#optionSelector').on('change', function() { myTable.draw(); });
@@ -10,10 +14,12 @@ function Initialize(url, updateUrl, columns, initComplete, search)
 {
 	$.fn.dataTable.ext.search.push(search);
 
-	var date = new Date();
-	var today = date.getDay();
-	
-	$("#daySelector").val(today);
+	if($('#daySelector'))
+	{
+		var date = new Date();
+		var today = date.getDay();		
+		$("#daySelector").val(today);
+	}
 	
 	myTable = $('#example').DataTable({
 		"columns": columns,

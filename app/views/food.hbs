@@ -13,7 +13,7 @@
 		<tr>
             <td>Meal:</td>
             <td>
-				<select id="daySelector">
+				<select id="mealSelector" class="updateTable">
 					<option value="1">Meal 1</option>
 					<option value="2">Meal 2</option>
 					<option value="3">Before Training</option>
@@ -28,35 +28,34 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var date = new Date();
-		var today = date.getDay();
 		var hour = date.getHours();
 		var min = date.getMinutes();
-		var startHour = 6;
-		var startMin = 30;
+		var startHour = 7;
+		var startMin = 0;
 		
-		var initComplete = function(settings, json) {
-			var counter = 0;
-			var currentItemSet = false;
-
-			myTable.rows({filter: 'applied'}).every(function (index) {
-				var rowHour = 3 * counter + startHour;
-				counter++;
-				
-				if(!currentItemSet && (rowHour > hour || (rowHour == hour && startMin >= min)))
-				{
-					$("#daySelector").val(counter);
-					currentItemSet = true;
-				}
-			});
-		};
+		var counter = 0;
+		var currentItemSet = false;
+		
+		$('#mealSelector > option').each(function() {
+			var rowHour = 3 * counter + startHour;
+			console.log(rowHour);
+			
+			counter++;
+			
+			if(!currentItemSet && (rowHour > hour || (rowHour == hour && startMin >= min)))
+			{
+				$("#mealSelector").val(counter);
+				currentItemSet = true;
+			}
+		});
 		
 		var search = function(settings, data, dataIndex ) {
-			var day = parseFloat(data[1]) || 0;
-			return day == $("#daySelector").val();
+			var meal = parseFloat(data[1]) || 0;
+			return meal == $("#mealSelector").val();
 		};
 		
 		var columns = [{ title: "Id", visible: false, type: "hidden" }, { title: "Meal", visible: false, type: "hidden" }, { title: "Food", type: "textarea" }];
 	
-		Initialize('/app/data/food.json', "/updateFoodItem", columns, initComplete, search);
+		Initialize('/app/data/food.json', "/updateFoodItem", columns, null, search);
 	});
 </script>
