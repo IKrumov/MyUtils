@@ -69,7 +69,7 @@ function initMap() {
 	   query: {
 		select: 'geometry',
 		from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
-		where: "ISO_2DIGIT IN ('BG', 'GR', 'IT', 'GB', 'DE', 'RS', 'BE', 'RO', 'FI', 'FR', 'ES', 'DK', 'AT', 'SK')"
+		where: "ISO_2DIGIT IN ('BG', 'GR', 'IT', 'GB', 'DE', 'RS', 'BE', 'RO', 'FI', 'FR', 'ES', 'DK', 'AT', 'SK', 'HU')"
 	  },
 	  styles: [
 		{ where: "ISO_2DIGIT IN ('FI', 'FR')", polygonOptions: { fillColor: "#144703", fillOpacity: ".30" }},
