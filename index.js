@@ -124,7 +124,7 @@ setInterval(function() {
     http.get("http://aubah.herokuapp.com");
 }, 300000); // every 5 minutes (300000)
 
-var port = process.env.PORT || 1337;
+var port = process.env.PORT || 80;
 app.listen(port);
 
 console.log("Server running at http://localhost:%d", port); 
