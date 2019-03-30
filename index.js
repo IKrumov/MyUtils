@@ -121,7 +121,7 @@ app.post('/updateFitnessItem', function (req, res) {
 })
 
 setInterval(function() {
-    http.get("http://ikrumov.com");
+    http.get("http://www.ikrumov.com");
 }, 300000); // every 5 minutes (300000)
 
 var port = process.env.PORT || 1377;
