@@ -34,6 +34,7 @@ app.get('/', (request, response) => { response.render('home') })
 app.get('/pomodoro', (request, response) => { response.render('pomodoro') })
 app.get('/fitness', (request, response) => { response.render('fitness') })
 app.get('/food', (request, response) => { response.render('food') })
+app.get('/surveillance', (request, response) => { response.render('surveillance') })
 
 app.use("/app", express.static(__dirname + '/app'));
 app.use("/app/js", express.static(__dirname + '/app/js'));
